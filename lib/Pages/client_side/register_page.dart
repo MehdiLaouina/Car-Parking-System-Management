@@ -3,9 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 
-import '../config.dart';
-import '../services/api_service.dart';
-import '../models/register_request_model.dart';
+import '../../config.dart';
+import '../../services/api_service.dart';
+import '../../models/client/register_request_model.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

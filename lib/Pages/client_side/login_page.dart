@@ -3,9 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 
-import '../config.dart';
-import '../models/login_request_model.dart';
-import '../services/api_service.dart';
+import '../../config.dart';
+import '../../models/client/login_request_model.dart';
+import '../../services/api_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);

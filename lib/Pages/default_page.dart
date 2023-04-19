@@ -45,7 +45,7 @@ class _DefaultHomeState extends State<DefaultHome> {
         ),
         const SizedBox(height: 10),
         const Text(
-          "A catch phrase!",
+          "Select User Type",
           style: TextStyle(
             fontSize: 20,
           ),

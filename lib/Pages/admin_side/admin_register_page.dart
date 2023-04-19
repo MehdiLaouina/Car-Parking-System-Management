@@ -3,23 +3,24 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 
-import '../config.dart';
-import '../models/admin_login_request_model.dart';
-import '../services/api_service.dart';
+import '../../config.dart';
+import '../../models/admin/admin_register_request_model.dart';
+import '../../services/api_service.dart';
 
-class AdminLoginPage extends StatefulWidget {
-  const AdminLoginPage({super.key});
+class AdminRegisterPage extends StatefulWidget {
+  const AdminRegisterPage({super.key});
 
   @override
-  State<AdminLoginPage> createState() => _AdminLoginPageState();
+  State<AdminRegisterPage> createState() => _AdminRegisterPageState();
 }
 
-class _AdminLoginPageState extends State<AdminLoginPage> {
+class _AdminRegisterPageState extends State<AdminRegisterPage> {
   bool isAPIcallProcess = false;
   bool hidePassword = true;
   GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
   //text controllers
   String? inputEmail;
+  String? inputNom;
   String? inputPassword;
 
   @override
@@ -32,13 +33,13 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
             key: UniqueKey(),
             child: Form(
               key: globalFormKey,
-              child: loginUI(context),
+              child: registerUI(context),
             ),
           )),
     );
   }
 
-  Widget loginUI(BuildContext context) {
+  Widget registerUI(BuildContext context) {
     return SingleChildScrollView(
       child: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -54,7 +55,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
             width: 250, // or any width that works for your design
             child: Center(
               child: Text(
-                "Bonjour à Nouveau!",
+                "Bonjour!",
                 style: GoogleFonts.bebasNeue(
                   fontSize: 52,
                 ),
@@ -63,31 +64,31 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
           ),
           const SizedBox(height: 10),
           const Text(
-            "An Owner catch phrase!",
+            "A Owner catch phrase!",
             style: TextStyle(
               fontSize: 20,
             ),
           ),
           const SizedBox(height: 50),
 
-          //email textfield
+          //Name textfield
           FormHelper.inputFieldWidget(
             context,
-            "email",
-            "Email",
+            "name",
+            "Full Name",
             prefixIcon: const Icon(
-              Icons.email,
+              Icons.person,
               color: Colors.deepPurple,
             ),
             showPrefixIcon: true,
             (onValidateVal) {
               if (onValidateVal.toString().isEmpty) {
-                return "Email can't be empty";
+                return "Name can't be empty";
               }
               return null;
             },
             (onSavedVal) {
-              inputEmail = onSavedVal;
+              inputNom = onSavedVal;
             },
             backgroundColor: (Colors.grey[200])!,
             borderFocusColor: Colors.deepPurple,
@@ -95,6 +96,36 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
             textColor: Colors.black,
             hintColor: Colors.black.withOpacity(0.2),
             borderRadius: 10,
+          ),
+
+          //email textfield
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: FormHelper.inputFieldWidget(
+              context,
+              "email",
+              "Email",
+              prefixIcon: const Icon(
+                Icons.email,
+                color: Colors.deepPurple,
+              ),
+              showPrefixIcon: true,
+              (onValidateVal) {
+                if (onValidateVal.toString().isEmpty) {
+                  return "Email can't be empty";
+                }
+                return null;
+              },
+              (onSavedVal) {
+                inputEmail = onSavedVal;
+              },
+              backgroundColor: (Colors.grey[200])!,
+              borderFocusColor: Colors.deepPurple,
+              borderColor: Colors.white,
+              textColor: Colors.black,
+              hintColor: Colors.black.withOpacity(0.2),
+              borderRadius: 10,
+            ),
           ),
 
           //password textfield
@@ -147,32 +178,34 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
               height: 60,
               width: 200,
               child: FormHelper.submitButton(
-                "Se Connecter",
+                "S'inscrire",
                 () {
                   if (validateAndSave()) {
                     setState(() {
                       isAPIcallProcess = true;
                     });
 
-                    AdminLoginRequestModel model = AdminLoginRequestModel(
-                        email: inputEmail!, password: inputPassword!);
-                    APIService.adminLogin(model).then((response) {
+                    AdminRegisterRequestModel model = AdminRegisterRequestModel(
+                        email: inputEmail!,
+                        password: inputPassword!,
+                        name: inputNom!);
+                    APIService.adminRegister(model).then((response) {
                       setState(() {
                         isAPIcallProcess = false;
                       });
-                      if (response) {
-                        FormHelper.showSimpleAlertDialog(
-                            context, Config.appName, "Login Succesfull!", "OK",
-                            () {
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, '/home', (route) => false);
-                        });
-                      } else {
+                      if (response.message != null) {
                         FormHelper.showSimpleAlertDialog(
                             context,
                             Config.appName,
-                            "Invalid Email/password !",
+                            "registration Succesfull! Please Login to the account.",
                             "OK", () {
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, '/admin-login', (route) => false);
+                        });
+                      } else {
+                        FormHelper.showSimpleAlertDialog(
+                            context, Config.appName, "Invalid Inputs !", "OK",
+                            () {
                           Navigator.pop(context);
                         });
                       }
@@ -195,21 +228,22 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text('N\'est pas propriétaire?',
+              const Text('déjà un propriétaire?',
                   style: TextStyle(fontWeight: FontWeight.bold)),
               GestureDetector(
                 onTap: () {
                   Navigator.pushNamedAndRemoveUntil(
-                      context, '/admin-register', (route) => false);
+                      context, '/admin-login', (route) => false);
                 },
                 child: const Text(
-                  ' Register Now',
+                  ' LogIn Now',
                   style: TextStyle(
                       color: Colors.blue, fontWeight: FontWeight.bold),
                 ),
               )
             ],
           ),
+
           const SizedBox(height: 40),
         ]),
       ),
