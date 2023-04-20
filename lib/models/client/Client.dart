@@ -48,10 +48,10 @@ class Data {
     id = json['id'];
     name = json['name'];
     email = json['email'];
-    vehicule = json['vehicle'];
-    N_immatriculation = json['N_immatriculation'];
+    vehicule = json['vehicule'];
+    N_immatriculation = json['immatriculation'];
     solde = json['solde'];
-    methodePayement = json['methodePayement'];
+    methodePayement = json['methodePaiment'];
   }
 
   Map<String, dynamic> toJson() {
@@ -59,10 +59,10 @@ class Data {
     data['id'] = id;
     data['name'] = name;
     data['email'] = email;
-    data['vehicle'] = vehicule;
-    data['N_immatriculation'] = N_immatriculation;
+    data['vehicule'] = vehicule;
+    data['immatriculation'] = N_immatriculation;
     data['solde'] = solde;
-    data['methodePayement'] = methodePayement;
+    data['methodePaiment'] = methodePayement;
     return data;
   }
 }

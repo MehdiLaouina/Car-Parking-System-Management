@@ -1,3 +1,4 @@
+import 'package:application/Pages/client_side/client_side_menu.dart';
 import 'package:application/Pages/map.dart';
 import 'package:flutter/material.dart';
 import 'package:application/Paint/CustomPaintHome.dart';
@@ -5,7 +6,6 @@ import 'package:application/Transitions/FadeTransition.dart';
 
 import '../../models/client/Client.dart';
 import '../../services/api_service.dart';
-import 'client_settings_page.dart';
 
 class ClientHomePage extends StatefulWidget {
   const ClientHomePage({super.key});
@@ -42,6 +42,7 @@ class _ClientHomePageState extends State<ClientHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: ClientSideMenu(client: currentClient),
       body: Stack(
         children: <Widget>[
           const TopBar_home(),
@@ -51,13 +52,19 @@ class _ClientHomePageState extends State<ClientHomePage> {
               child: AppBar(
                 leading: Padding(
                   padding: const EdgeInsets.only(left: 10.0),
-                  child: GestureDetector(
-                    child: Icon(
-                      Icons.menu,
-                      color: Colors.white.withOpacity(0.9),
-                      size: 26,
-                    ),
-                    onTap: () {},
+                  child: Builder(
+                    builder: (context) {
+                      return GestureDetector(
+                        child: Icon(
+                          Icons.menu,
+                          color: Colors.white.withOpacity(0.9),
+                          size: 26,
+                        ),
+                        onTap: () {
+                          Scaffold.of(context).openDrawer();
+                        },
+                      );
+                    },
                   ),
                 ),
                 title: const Center(
@@ -70,26 +77,10 @@ class _ClientHomePageState extends State<ClientHomePage> {
                         fontFamily: 'Quickstand'),
                   ),
                 ),
-                actions: <Widget>[
+                actions: const <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(right: 16.0),
-                    child: GestureDetector(
-                      child: Icon(
-                        Icons.settings,
-                        color: Colors.white.withOpacity(0.9),
-                        size: 24,
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                ClientSettingsPage(client: currentClient),
-                          ),
-                        );
-                      },
-                    ),
-                  )
+                    padding: EdgeInsets.only(right: 16.0),
+                  ),
                 ],
                 backgroundColor: Colors.transparent,
                 elevation: 0,

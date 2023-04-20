@@ -85,27 +85,50 @@ class APIService {
     return adminRegisterResponseModel(response.body);
   }
 
-  // static Future<bool> adminLogout() async {
-  //   Map<String, String> requestHeaders = {
-  //     'Content-Type': 'application/json',
-  //   };
-  // }
+  static Future<bool> adminLogout() async {
+    var loginDetails = await SharedService.loginDetails();
 
-  // static Future<bool> logout(LogoutRequestModel model) async {
-  //   Map<String, String> requestHeaders = {
-  //     'Content-Type': 'application/json',
-  //   };
-  // }
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${loginDetails!.data.token}'
+    };
+
+    var url = Uri.http(Config.apiURL, Config.adminLogOut);
+
+    var response = await client.get(url, headers: requestHeaders);
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  static Future<bool> clientLogout() async {
+    var loginDetails = await SharedService.loginDetails();
+
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${loginDetails!.data.token}'
+    };
+
+    var url = Uri.http(Config.apiURL, Config.clientLogOut);
+
+    var response = await client.get(url, headers: requestHeaders);
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   static Future<Client?> getClientProfile() async {
     var loginDetails = await SharedService.loginDetails();
 
-    // ignore: avoid_print
-    print(loginDetails!.data.token);
-
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${loginDetails.data.token}'
+      'Authorization': 'Bearer ${loginDetails!.data.token}'
     };
 
     var url = Uri.http(Config.apiURL, Config.clientProfileAPI);
@@ -113,7 +136,6 @@ class APIService {
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode == 200) {
-      //user succefully logged in
       return clientJson(response.body);
     } else {
       return null;
@@ -124,6 +146,7 @@ class APIService {
     var loginDetails = await SharedService.loginDetails();
 
     Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
       'Authorization': 'Bearer ${loginDetails!.data.token}'
     };
 
@@ -132,7 +155,6 @@ class APIService {
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode == 200) {
-      //user succefully logged in
       return adminJson(response.body);
     } else {
       return null;

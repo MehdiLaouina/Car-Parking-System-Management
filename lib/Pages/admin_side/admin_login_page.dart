@@ -165,7 +165,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                             context, Config.appName, "Login Succesfull!", "OK",
                             () {
                           Navigator.pushNamedAndRemoveUntil(
-                              context, '/home', (route) => false);
+                              context, '/admin-home', (route) => false);
                         });
                       } else {
                         FormHelper.showSimpleAlertDialog(
