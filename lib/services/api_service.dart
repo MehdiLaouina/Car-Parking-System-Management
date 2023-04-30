@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:application/models/map/parkings_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:application/config.dart';
 import 'package:application/services/shared_service.dart';
@@ -156,6 +157,25 @@ class APIService {
 
     if (response.statusCode == 200) {
       return adminJson(response.body);
+    } else {
+      return null;
+    }
+  }
+
+  static Future<ParkingsModel?> getMap() async {
+    var loginDetails = await SharedService.loginDetails();
+
+    Map<String, String> requestHeaders = {
+      'Authorization': 'Bearer ${loginDetails!.data.token}',
+      'content-Type': "application/json"
+    };
+
+    var url = Uri.http(Config.apiURL, Config.map);
+
+    var response = await client.get(url, headers: requestHeaders);
+
+    if (response.statusCode == 200) {
+      return parkingsModelJson(response.body);
     } else {
       return null;
     }

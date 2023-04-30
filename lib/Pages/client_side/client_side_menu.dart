@@ -35,7 +35,7 @@ class ClientSideMenu extends StatelessWidget {
                   buildSearchField(),
                   const SizedBox(height: 24),
                   buildMenuItem(
-                    text: 'Update Profile',
+                    text: 'Profile',
                     icon: Icons.person_2,
                     onClicked: () => selectedItem(context, 0),
                   ),
@@ -151,7 +151,7 @@ class ClientSideMenu extends StatelessWidget {
     switch (index) {
       case 0:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ClientUpdateInfo(client: client),
+          builder: (context) => ClientProfileInfo(client: client),
         ));
         break;
       case 1:

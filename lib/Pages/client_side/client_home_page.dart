@@ -15,7 +15,6 @@ class ClientHomePage extends StatefulWidget {
 }
 
 class _ClientHomePageState extends State<ClientHomePage> {
-  late APIService apiService = APIService();
   Client currentClient = Client(
       message: "",
       data: Data(

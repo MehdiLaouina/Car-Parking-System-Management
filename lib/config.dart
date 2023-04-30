@@ -1,6 +1,9 @@
 class Config {
   static const String appName = "Park My Car";
-  static const String apiURL = "192.168.1.10:3000";
+  static const String apiURL = "192.168.1.13:3000";
+
+  static const String map = "/map";
+
   static const String loginClientAPI = "/loginClient";
   static const String registerClientAPI = "/signupClient";
   static const String loginAdminAPI = "/loginAdmin";

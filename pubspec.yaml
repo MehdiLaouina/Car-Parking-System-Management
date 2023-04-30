@@ -41,6 +41,7 @@ dependencies:
   intl:
   flutter_map:
   latlong: any
+  line_awesome_flutter: ^2.0.0
 
 dev_dependencies:
   flutter_test:

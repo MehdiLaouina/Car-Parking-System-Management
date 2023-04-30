@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class CustomMarker extends StatelessWidget {
   final IconData _icon;
-  final String _space;
+  final int _space;
 
   const CustomMarker(this._icon, this._space, {super.key});
 
@@ -32,9 +32,9 @@ class CustomMarker extends StatelessWidget {
                 color: Colors.grey[800],
               ),
               Text(
-                _space,
+                '$_space',
                 style:
-                    const TextStyle(fontSize: 10, fontWeight: FontWeight.w800),
+                    const TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
               ),
             ],
           ),
@@ -43,24 +43,3 @@ class CustomMarker extends StatelessWidget {
     );
   }
 }
-
-/*class MeMarker extends StatelessWidget {
-  const MeMarker({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        CircleAvatar(
-          backgroundColor: Colors.black.withOpacity(0.1),
-        ),
-        const Center(
-          child: CircleAvatar(
-            radius: 5,
-            backgroundColor: Colors.black,
-          ),
-        )
-      ],
-    );
-  }
-}*/

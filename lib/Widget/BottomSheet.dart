@@ -3,7 +3,8 @@ import 'package:application/Transitions/SlideTransition.dart';
 //import 'package:application/Pages/payment.dart';
 
 class DraggableSheet extends StatelessWidget {
-  const DraggableSheet({super.key});
+  final int index;
+  const DraggableSheet({super.key, required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,7 @@ class DraggableSheet extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             const Text(
-                              'Perdo Garage',
+                              'Car Parking Garage',
                               style: TextStyle(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 22.4,
