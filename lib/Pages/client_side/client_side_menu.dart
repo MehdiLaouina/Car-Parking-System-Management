@@ -1,7 +1,8 @@
 import 'package:application/Pages/client_side/client_bookings_page.dart';
-import 'package:application/Pages/client_side/client_update_info.dart';
+import 'package:application/Pages/client_side/client_profile_info.dart';
 import 'package:application/Pages/default_page.dart';
 import 'package:application/models/client/Client.dart';
+import 'package:application/services/api_service.dart';
 import 'package:flutter/material.dart';
 
 class ClientSideMenu extends StatelessWidget {
@@ -52,6 +53,7 @@ class ClientSideMenu extends StatelessWidget {
                     text: 'Log Out',
                     icon: Icons.logout,
                     onClicked: () {
+                      showLogoutConfirmation(context);
                       //to add the popup, then if pressed OK will => selectedItem(context, 2)
                     },
                   ),
@@ -160,10 +162,39 @@ class ClientSideMenu extends StatelessWidget {
         ));
         break;
       case 2:
+        APIService.clientLogout();
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => const DefaultHome(),
         ));
         break;
     }
+  }
+
+  void showLogoutConfirmation(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Logout Confirmation'),
+          content: const Text('Are you sure you want to log out?'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+            ),
+            TextButton(
+              child: const Text('Logout'),
+              onPressed: () {
+                // Perform logout operation here
+                selectedItem(context, 2);
+                Navigator.of(context).pop(); // Close the dialog
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:snippet_coder_utils/ProgressHUD.dart';
 
-import '../../config.dart';
-import '../../services/api_service.dart';
+import '../../models/client/Client.dart';
 import '../../models/client/register_request_model.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+class ClientEditProfile extends StatefulWidget {
+  final Client client;
+  const ClientEditProfile({super.key, required this.client});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<ClientEditProfile> createState() => _ClientEditProfileState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _ClientEditProfileState extends State<ClientEditProfile> {
   bool isAPIcallProcess = false;
   bool hidePassword = true;
   GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
@@ -25,7 +24,6 @@ class _RegisterPageState extends State<RegisterPage> {
   String? inputImmatriculation;
   double? inputSolde;
   String? inputPaymentMethod;
-  String? inputPassword;
 
   @override
   Widget build(BuildContext context) {
@@ -37,49 +35,32 @@ class _RegisterPageState extends State<RegisterPage> {
             key: UniqueKey(),
             child: Form(
               key: globalFormKey,
-              child: registerUI(context),
+              child: editUI(context),
             ),
           )),
     );
   }
 
-  Widget registerUI(BuildContext context) {
+  Widget editUI(BuildContext context) {
     return SingleChildScrollView(
       child: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          const SizedBox(height: 50),
-          Image.asset(
-            'assets/images/App_Logo.png',
-            height: 160,
-            width: 160,
-          ),
-          const SizedBox(height: 50),
-          //Hello Again!
+          const SizedBox(height: 20),
           SizedBox(
-            width: 250, // or any width that works for your design
-            child: Center(
-              child: Text(
-                "Bonjour!",
-                style: GoogleFonts.bebasNeue(
-                  fontSize: 52,
-                ),
-              ),
+            width: 120,
+            height: 120,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: Image.asset('assets/images/App_Logo.png'),
             ),
           ),
-          const SizedBox(height: 10),
-          const Text(
-            "A catch phrase!",
-            style: TextStyle(
-              fontSize: 20,
-            ),
-          ),
-          const SizedBox(height: 50),
+          const SizedBox(height: 30),
 
           //Name textfield
           FormHelper.inputFieldWidget(
             context,
             "name",
-            "Full Name",
+            widget.client.data.name,
             prefixIcon: const Icon(
               Icons.person,
               color: Colors.deepPurple,
@@ -108,7 +89,7 @@ class _RegisterPageState extends State<RegisterPage> {
             child: FormHelper.inputFieldWidget(
               context,
               "email",
-              "Email",
+              widget.client.data.email,
               prefixIcon: const Icon(
                 Icons.email,
                 color: Colors.deepPurple,
@@ -131,7 +112,7 @@ class _RegisterPageState extends State<RegisterPage> {
               borderRadius: 10,
             ),
           ),
-
+          /*
           //password textfield
           Padding(
             padding: const EdgeInsets.only(top: 10),
@@ -173,14 +154,14 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
           ),
-
+          */
           //vehicule textfield
           Padding(
             padding: const EdgeInsets.only(top: 10.0),
             child: FormHelper.inputFieldWidget(
               context,
               "vehicule",
-              "Vehicule Name/Model",
+              widget.client.data.vehicule,
               prefixIcon: const Icon(
                 Icons.car_rental,
                 color: Colors.deepPurple,
@@ -210,7 +191,7 @@ class _RegisterPageState extends State<RegisterPage> {
             child: FormHelper.inputFieldWidget(
               context,
               "immatriculation",
-              "No Immatriculation",
+              widget.client.data.N_immatriculation,
               prefixIcon: const Icon(
                 Icons.format_list_numbered,
                 color: Colors.deepPurple,
@@ -237,7 +218,8 @@ class _RegisterPageState extends State<RegisterPage> {
           //solde textfield
           Padding(
             padding: const EdgeInsets.only(top: 10.0),
-            child: FormHelper.inputFieldWidget(context, "solde", "Your balance",
+            child: FormHelper.inputFieldWidget(
+                context, "solde", "${widget.client.data.solde}",
                 prefixIcon: const Icon(
                   Icons.monetization_on,
                   color: Colors.deepPurple,
@@ -263,7 +245,7 @@ class _RegisterPageState extends State<RegisterPage> {
           Padding(
             padding: const EdgeInsets.only(top: 10.0),
             child: FormHelper.inputFieldWidget(
-                context, "payment", "Your Payment Method",
+                context, "payment", widget.client.data.methodePayement,
                 prefixIcon: const Icon(
                   Icons.paypal,
                   color: Colors.deepPurple,
@@ -292,41 +274,45 @@ class _RegisterPageState extends State<RegisterPage> {
               height: 60,
               width: 200,
               child: FormHelper.submitButton(
-                "S'inscrire",
+                "Edit Profile",
                 () {
                   if (validateAndSave()) {
                     setState(() {
                       isAPIcallProcess = true;
                     });
-
                     RegisterRequestModel model = RegisterRequestModel(
                         email: inputEmail!,
-                        password: inputPassword!,
                         immatriculation: inputImmatriculation!,
                         name: inputNom!,
                         payment_method: inputPaymentMethod!,
                         solde: inputSolde!,
-                        vehicule: inputVehicule!);
-                    APIService.register(model).then((response) {
-                      setState(() {
-                        isAPIcallProcess = false;
-                      });
-                      if (response.message != "user already exists") {
-                        FormHelper.showSimpleAlertDialog(
-                            context,
-                            Config.appName,
-                            "registration Succesfull! Please Login to the account.",
-                            "OK", () {
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, '/login', (route) => false);
+                        vehicule: inputVehicule!,
+                        password: '');
+
+                    //TO ADD API SERVICE FOR EDIT PROFILE
+                    /*APIService.register(model).then(
+                      (response) {
+                        setState(() {
+                          isAPIcallProcess = false;
                         });
-                      } else {
-                        FormHelper.showSimpleAlertDialog(context,
-                            Config.appName, "Email Already in use !", "OK", () {
-                          Navigator.pop(context);
-                        });
-                      }
-                    });
+                        if (response.message != null) {
+                          FormHelper.showSimpleAlertDialog(
+                              context,
+                              Config.appName,
+                              "registration Succesfull! Please Login to the account.",
+                              "OK", () {
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, '/login', (route) => false);
+                          });
+                        } else {
+                          FormHelper.showSimpleAlertDialog(
+                              context, Config.appName, "Invalid Inputs !", "OK",
+                              () {
+                            Navigator.pop(context);
+                          });
+                        }
+                      },
+                    )*/
                   }
                 },
                 btnColor: Colors.deepPurple,
@@ -340,28 +326,6 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
 
           const SizedBox(height: 25),
-
-          //register button textfield
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('déjà un membre?',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, '/login', (route) => false);
-                },
-                child: const Text(
-                  ' LogIn Now',
-                  style: TextStyle(
-                      color: Colors.blue, fontWeight: FontWeight.bold),
-                ),
-              )
-            ],
-          ),
-
-          const SizedBox(height: 40),
         ]),
       ),
     );

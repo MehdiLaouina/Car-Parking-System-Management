@@ -89,39 +89,15 @@ class APIService {
   static Future<bool> adminLogout() async {
     var loginDetails = await SharedService.loginDetails();
 
-    Map<String, String> requestHeaders = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${loginDetails!.data.token}'
-    };
-
-    var url = Uri.http(Config.apiURL, Config.adminLogOut);
-
-    var response = await client.get(url, headers: requestHeaders);
-
-    if (response.statusCode == 200) {
-      return true;
-    } else {
-      return false;
-    }
+    loginDetails!.data.token = '';
+    return true;
   }
 
   static Future<bool> clientLogout() async {
     var loginDetails = await SharedService.loginDetails();
 
-    Map<String, String> requestHeaders = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${loginDetails!.data.token}'
-    };
-
-    var url = Uri.http(Config.apiURL, Config.clientLogOut);
-
-    var response = await client.get(url, headers: requestHeaders);
-
-    if (response.statusCode == 200) {
-      return true;
-    } else {
-      return false;
-    }
+    loginDetails!.data.token = '';
+    return true;
   }
 
   static Future<Client?> getClientProfile() async {

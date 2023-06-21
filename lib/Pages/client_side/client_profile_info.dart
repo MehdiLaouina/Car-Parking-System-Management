@@ -1,3 +1,5 @@
+import 'package:application/Pages/client_side/client_edit_pass.dart';
+import 'package:application/Pages/client_side/client_edit_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
@@ -52,7 +54,11 @@ class ClientProfileInfo extends StatelessWidget {
               SizedBox(
                 width: 200,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ClientEditProfile(client: client),
+                    ));
+                  },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.deepPurple,
                       side: BorderSide.none,
@@ -65,7 +71,28 @@ class ClientProfileInfo extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: 200,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ClientEditPass(client: client),
+                    ));
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepPurple,
+                      side: BorderSide.none,
+                      shape: const StadiumBorder()),
+                  child: const Text(
+                    'Change Password',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 40),
               const Divider(),
             ],
           ),
