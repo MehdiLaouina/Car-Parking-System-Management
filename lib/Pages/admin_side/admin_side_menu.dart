@@ -2,6 +2,7 @@ import 'package:application/Pages/admin_side/admin_update_info.dart';
 import 'package:application/models/admin/Admin.dart';
 import 'package:flutter/material.dart';
 
+import '../../services/api_service.dart';
 import '../default_page.dart';
 import 'admin_ownings_page.dart';
 
@@ -53,7 +54,7 @@ class AdminSideMenu extends StatelessWidget {
                     text: 'Log Out',
                     icon: Icons.logout,
                     onClicked: () {
-                      //to add the popup, then if pressed OK will => selectedItem(context, 2)
+                      showLogoutConfirmation(context);
                     },
                   ),
                 ],
@@ -161,10 +162,40 @@ class AdminSideMenu extends StatelessWidget {
         ));
         break;
       case 2:
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const DefaultHome(),
-        ));
+        APIService.logOut();
         break;
     }
+  }
+
+  void showLogoutConfirmation(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Logout Confirmation'),
+          content: const Text('Are you sure you want to log out?'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+            ),
+            TextButton(
+              child: const Text('Logout'),
+              onPressed: () {
+                // Perform logout operation here
+                selectedItem(context, 2);
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const DefaultHome()),
+                  (Route<dynamic> route) => false,
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

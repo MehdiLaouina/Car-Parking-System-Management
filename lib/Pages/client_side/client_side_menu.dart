@@ -54,7 +54,6 @@ class ClientSideMenu extends StatelessWidget {
                     icon: Icons.logout,
                     onClicked: () {
                       showLogoutConfirmation(context);
-                      //to add the popup, then if pressed OK will => selectedItem(context, 2)
                     },
                   ),
                 ],
@@ -162,10 +161,7 @@ class ClientSideMenu extends StatelessWidget {
         ));
         break;
       case 2:
-        APIService.clientLogout();
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const DefaultHome(),
-        ));
+        APIService.logOut();
         break;
     }
   }
@@ -189,7 +185,11 @@ class ClientSideMenu extends StatelessWidget {
               onPressed: () {
                 // Perform logout operation here
                 selectedItem(context, 2);
-                Navigator.of(context).pop(); // Close the dialog
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const DefaultHome()),
+                  (Route<dynamic> route) => false,
+                );
               },
             ),
           ],

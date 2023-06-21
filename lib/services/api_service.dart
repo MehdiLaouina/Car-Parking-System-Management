@@ -86,14 +86,7 @@ class APIService {
     return adminRegisterResponseModel(response.body);
   }
 
-  static Future<bool> adminLogout() async {
-    var loginDetails = await SharedService.loginDetails();
-
-    loginDetails!.data.token = '';
-    return true;
-  }
-
-  static Future<bool> clientLogout() async {
+  static Future<bool> logOut() async {
     var loginDetails = await SharedService.loginDetails();
 
     loginDetails!.data.token = '';

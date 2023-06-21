@@ -30,7 +30,7 @@ class Data {
     required this.token,
   });
   late final String email;
-  late final String token;
+  String token = '';
 
   Data.fromJson(Map<String, dynamic> json) {
     email = json['email'];
