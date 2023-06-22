@@ -14,6 +14,7 @@ import '../models/client/login_request_model.dart';
 import '../models/client/login_response_model.dart';
 import '../models/client/register_request_model.dart';
 import '../models/client/register_response_model.dart';
+import '../models/map/markers_model.dart';
 
 class APIService {
   static var client = http.Client();
@@ -147,6 +148,40 @@ class APIService {
       return parkingsModelJson(response.body);
     } else {
       return null;
+    }
+  }
+
+  static Future<ParkingsModel?> getParkingDetail() async {
+    var loginDetails = await SharedService.loginDetails();
+
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${loginDetails!.data.token}'
+    };
+
+    var url = Uri.http(Config.apiURL, Config.adminOwning);
+
+    var response = await client.get(url, headers: requestHeaders);
+
+    if (response.statusCode == 200) {
+      return parkingsModelJson(response.body);
+    } else {
+      return null;
+    }
+  }
+
+  static Future<String?> test() async {
+    var request =
+        http.MultipartRequest('POST', Uri.parse('http://localhost:3001/image'));
+    request.files.add(await http.MultipartFile.fromPath('image',
+        '/C:/Users/ahmed/Documents/Ai/workingDirectory/darknet/data/obj/00d90448dcea9140.jpg'));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      return await response.stream.bytesToString();
+    } else {
+      return response.reasonPhrase;
     }
   }
 }

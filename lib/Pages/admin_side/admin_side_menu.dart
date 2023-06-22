@@ -158,7 +158,7 @@ class AdminSideMenu extends StatelessWidget {
         break;
       case 1:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => AdminOwningsPage(admin: admin),
+          builder: (context) => const AdminOwningsPage(),
         ));
         break;
       case 2:

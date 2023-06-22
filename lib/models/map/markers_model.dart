@@ -1,4 +1,5 @@
-// ignore_for_file: non_constant_Identifier_names
+import 'dart:convert';
+import 'dart:ffi';
 
 List<MarkerModel> markerFromJson(dynamic str) =>
     List<MarkerModel>.from((str).map((x) => MarkerModel.fromJson(x)));
@@ -13,6 +14,7 @@ class MarkerModel {
   late int id_Admin;
   late double longitude;
   late double latitude;
+  late double Prix_spot;
 
   MarkerModel(
       {required this.id_parking,
@@ -23,7 +25,8 @@ class MarkerModel {
       required this.close_time,
       required this.id_Admin,
       required this.longitude,
-      required this.latitude});
+      required this.latitude,
+      required this.Prix_spot});
 
   MarkerModel.fromJson(Map<String, dynamic> json) {
     id_parking = json['Id_parking'];
@@ -43,6 +46,7 @@ class MarkerModel {
     id_Admin = json['Id_Admin'];
     longitude = json['longitude'];
     latitude = json['latitude'];
+    Prix_spot = json['Prix_spot'];
   }
 
   Map<String, dynamic> toJson() {
@@ -56,6 +60,7 @@ class MarkerModel {
     data['Id_Admin'] = id_Admin;
     data['longitude'] = longitude;
     data['latitude'] = latitude;
+    data['Prix_spot'] = Prix_spot;
     return data;
   }
 

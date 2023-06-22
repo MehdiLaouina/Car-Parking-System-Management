@@ -157,7 +157,7 @@ class ClientSideMenu extends StatelessWidget {
         break;
       case 1:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ClientBookingsPage(client: client),
+          builder: (context) => const ClientBookingsPage(),
         ));
         break;
       case 2:

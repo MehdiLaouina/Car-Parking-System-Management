@@ -1,6 +1,6 @@
 class Config {
   static const String appName = "Park My Car";
-  static const String apiURL = "192.168.100.183:3000";
+  static const String apiURL = "192.168.1.105:3000";
 
   static const String map = "/map";
 
@@ -11,6 +11,8 @@ class Config {
 
   static const String clientProfileAPI = "/client/userprofile";
   static const String adminProfileAPI = "/admin/userprofile";
+
+  static const String adminOwning = "/getParkings";
 
   static const String clientLogOut = "/client/logout";
   static const String adminLogOut = "/admin/logout";
