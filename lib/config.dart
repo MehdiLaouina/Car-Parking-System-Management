@@ -13,6 +13,7 @@ class Config {
   static const String adminProfileAPI = "/admin/userprofile";
 
   static const String adminOwning = "/getParkings";
+  static const String clientReservations = "/getReservations";
 
   static const String clientLogOut = "/client/logout";
   static const String adminLogOut = "/admin/logout";

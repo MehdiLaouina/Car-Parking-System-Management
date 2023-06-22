@@ -15,6 +15,7 @@ import '../models/client/login_response_model.dart';
 import '../models/client/register_request_model.dart';
 import '../models/client/register_response_model.dart';
 import '../models/map/markers_model.dart';
+import '../models/reservation/reservations_model.dart';
 
 class APIService {
   static var client = http.Client();
@@ -165,6 +166,25 @@ class APIService {
 
     if (response.statusCode == 200) {
       return parkingsModelJson(response.body);
+    } else {
+      return null;
+    }
+  }
+
+  static Future<ReservationsModel?> getReservationDetail() async {
+    var loginDetails = await SharedService.loginDetails();
+
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${loginDetails!.data.token}'
+    };
+
+    var url = Uri.http(Config.apiURL, Config.clientReservations);
+
+    var response = await client.get(url, headers: requestHeaders);
+
+    if (response.statusCode == 200) {
+      return reservationsModelJson(response.body);
     } else {
       return null;
     }
