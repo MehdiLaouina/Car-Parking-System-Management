@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:ffi';
-
 List<MarkerModel> markerFromJson(dynamic str) =>
     List<MarkerModel>.from((str).map((x) => MarkerModel.fromJson(x)));
 
@@ -46,7 +43,7 @@ class MarkerModel {
     id_Admin = json['Id_Admin'];
     longitude = json['longitude'];
     latitude = json['latitude'];
-    Prix_spot = json['Prix_spot'];
+    Prix_spot = json['Prix_spot'].toDouble();
   }
 
   Map<String, dynamic> toJson() {

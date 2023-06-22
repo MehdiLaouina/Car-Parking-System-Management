@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:application/Transitions/SlideTransition.dart';
+
+import '../Pages/client_side/client_payment_page.dart';
 //import 'package:application/Pages/payment.dart';
 
 class DraggableSheet extends StatelessWidget {
@@ -59,7 +61,7 @@ class DraggableSheet extends StatelessWidget {
                               height: 8,
                             ),
                             const Text(
-                              '235 Zemblak Crest Apt. 102',
+                              ' 123 Trik Mouzar Fes',
                               style: TextStyle(
                                   fontWeight: FontWeight.w400,
                                   color: Colors.black54,
@@ -111,7 +113,7 @@ class DraggableSheet extends StatelessWidget {
                                   width: 4,
                                 ),
                                 const Text(
-                                  '10.44 p/h',
+                                  '1.5 dh/h',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 12.4),
@@ -156,8 +158,8 @@ class DraggableSheet extends StatelessWidget {
                                   const EdgeInsets.symmetric(vertical: 14.0)),
                         ),
                         onPressed: () {
-                          //Navigator.push(context,
-                          //  SlideTopRoute(page: const MyPaymentPage()));
+                          Navigator.push(
+                              context, SlideTopRoute(page: MyPaymentPage()));
                         },
                         child: const Text(
                           'BOOK SPOT',
@@ -191,7 +193,7 @@ class DraggableSheet extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 24.0),
                     child: Text(
-                      '05:00 AM - 11:00 PM',
+                      '05:00 AM - 12:00 PM',
                       style: TextStyle(
                           fontWeight: FontWeight.w700,
                           color: Colors.grey[900],
@@ -243,7 +245,7 @@ class DraggableSheet extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                          '886-445-7822',
+                          '+212-664127643',
                           style: TextStyle(
                               fontWeight: FontWeight.w700,
                               color: Colors.grey[900],
@@ -269,7 +271,7 @@ class DraggableSheet extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                          'perdoGarage.co.us',
+                          'mehdi@gmail.com',
                           style: TextStyle(
                               fontWeight: FontWeight.w700,
                               color: Colors.grey[900],
@@ -299,7 +301,7 @@ class DraggableSheet extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 24.0),
                     child: Text(
-                      'Perdo Garage - 235 Bahringer Stravenue Suite 164 Colony Apt. 102',
+                      'Car Parking Garage - 123 Trik Mouzar Fes 30400',
                       style: TextStyle(
                           fontWeight: FontWeight.w700,
                           color: Colors.grey[900],
